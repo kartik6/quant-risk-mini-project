@@ -1,0 +1,17 @@
+# Local study notes. Not part of the submission.
+learnings.md
+
+# Build artefact. Rebuild it from the tracked files.
+quant-risk-mini-project.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Notebook state
+.ipynb_checkpoints/
