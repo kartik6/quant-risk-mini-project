@@ -6,6 +6,8 @@ scenarios.
 
 ## Quick start
 
+Needs **Python 3.10 or newer**. Developed and verified on 3.12.7.
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate

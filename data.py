@@ -85,7 +85,14 @@ def _download(tickers: list[str], start: str, end: str) -> pd.DataFrame:
     prices = raw["Close"] if raw.columns.nlevels == 2 else raw[["Close"]]
 
     # Force the requested order. yfinance sorts the tickers alphabetically.
-    return prices.reindex(columns=tickers)
+    prices = prices.reindex(columns=tickers)
+
+    # yfinance names the column index "Ticker". Reading the cache back from CSV
+    # does not. Clearing the name keeps a cached run and a --refresh run
+    # printing the same tables.
+    prices.columns.name = None
+    prices.index.name = "Date"
+    return prices
 
 
 def _failed_tickers(prices: pd.DataFrame, tickers: list[str]) -> list[str]:
