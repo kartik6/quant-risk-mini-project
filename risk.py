@@ -229,7 +229,15 @@ def simulate_portfolio_returns(
         )
 
     rng = np.random.default_rng(seed)
-    draws = rng.multivariate_normal(np.asarray(mean, dtype=float), cov.to_numpy(), size=n_simulations)
+    # method="svd" is numpy's current default, stated here on purpose. The same
+    # reasoning applies as for auto_adjust in data.py: a default that the code
+    # depends on should be written down, not assumed.
+    draws = rng.multivariate_normal(
+        np.asarray(mean, dtype=float),
+        cov.to_numpy(),
+        size=n_simulations,
+        method="svd",
+    )
 
     return pd.Series(draws @ weights, name="simulated_portfolio_return")
 
