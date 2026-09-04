@@ -196,9 +196,14 @@ def simulate_portfolio_returns(
     would let the stocks cancel each other far more often than they really do.
     Measured on this data, that mistake understates the risk by 29%.
 
-    Underneath, numpy factors the covariance matrix into L, where L @ L.T
-    equals Sigma, then multiplies independent noise by L. That factor is what
-    stirs the correlation into the noise.
+    Underneath, numpy finds a mixing table A where A @ A.T equals Sigma, then
+    multiplies independent noise by A. Because one column of A feeds more than
+    one stock, that shared ingredient is what creates the correlation.
+
+    Two algorithms can find such an A: Cholesky decomposition and singular
+    value decomposition. numpy's default here is SVD, which is more robust when
+    the covariance matrix is close to singular. Either gives draws with the
+    same covariance.
 
     The mean argument controls a useful comparison:
 
